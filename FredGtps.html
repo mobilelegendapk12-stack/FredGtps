@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Promote Fred Gtps</title>
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#05040a;
+    --card-bg: rgba(18,10,30,0.65);
+    --neon1: #b800ff; /* ungu terang */
+    --neon2: #7a00ff; /* ungu gelap */
+    --accent: #e9d6ff;
+    --good: #8affb8;
+    --muted: #a9a3b8;
+    --glass: rgba(255,255,255,0.03);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:
+      radial-gradient(1000px 400px at 10% 10%, rgba(122,0,255,0.06), transparent 10%),
+      radial-gradient(900px 300px at 90% 90%, rgba(184,0,255,0.05), transparent 10%),
+      var(--bg);
+    color:var(--accent);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  header{
+    text-align:center;
+    padding:20px 16px;
+    background: linear-gradient(90deg, rgba(122,0,255,0.14), rgba(184,0,255,0.12));
+    box-shadow: 0 6px 30px rgba(122,0,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.02);
+  }
+  header h1{
+    margin:0;
+    font-size:26px;
+    letter-spacing:1px;
+    color:white;
+    text-shadow: 0 0 18px rgba(184,0,255,0.22);
+  }
+  header p{
+    margin:6px 0 0;
+    color:var(--muted);
+    font-size:13px;
+  }
+
+  .promo-banner{
+    width:95%;
+    max-width:980px;
+    margin:16px auto 0;
+    padding:12px 16px;
+    border-radius:12px;
+    background: linear-gradient(90deg, rgba(122,0,255,0.06), rgba(184,0,255,0.03));
+    color: #f5ecff;
+    display:flex;
+    gap:12px;
+    align-items:center;
+    justify-content:space-between;
+    border: 1px solid rgba(184,0,255,0.14);
+    box-shadow: 0 6px 26px rgba(122,0,255,0.04);
+  }
+  .promo-left{display:flex;gap:10px;align-items:center}
+  .promo-tag{
+    background:linear-gradient(90deg,var(--neon2),var(--neon1));
+    padding:6px 10px;
+    border-radius:8px;
+    font-weight:700;
+    box-shadow: 0 6px 24px rgba(122,0,255,0.12);
+  }
+  .promo-text{font-size:14px;color:var(--accent)}
+  .promo-right{font-size:14px;color:var(--muted)}
+
+  .container{
+    width:95%;
+    max-width:980px;
+    margin:18px auto 56px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+  }
+
+  .card{
+    background: var(--card-bg);
+    border-radius:16px;
+    padding:18px;
+    position:relative;
+    overflow:hidden;
+    border:2px solid rgba(122,0,255,0.18);
+    box-shadow:
+      0 6px 32px rgba(122,0,255,0.06),
+      inset 0 0 26px rgba(122,0,255,0.03);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    backdrop-filter: blur(6px);
+  }
+
+  .card::after{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    background: linear-gradient(120deg, rgba(122,0,255,0.06), rgba(184,0,255,0.03));
+    pointer-events:none;
+    mix-blend-mode:screen;
+    z-index:1;
+  }
+
+  .card:hover{
+    transform:translateY(-6px);
+    border-color: rgba(122,0,255,0.35);
+    box-shadow: 0 10px 40px rgba(122,0,255,0.18), inset 0 0 40px rgba(122,0,255,0.06);
+  }
+
+  .title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:6px;
+    position:relative;
+    z-index:2;
+  }
+  .title h2{
+    margin:0;
+    font-size:20px;
+    color:var(--neon1);
+    text-shadow: 0 0 10px rgba(184,0,255,0.18);
+  }
+  .price{
+    color:var(--good);
+    font-weight:700;
+    font-size:16px;
+    margin-top:4px;
+    position:relative;
+    z-index:2;
+  }
+
+  ul{
+    margin:12px 0 0;
+    padding-left:6px;
+    color:var(--accent);
+    line-height:1.5;
+    font-size:15px;
+    position:relative;
+    z-index:2;
+  }
+  ul li{
+    margin-bottom:8px;
+    padding-left:0;
+  }
+
+  /* centang dipakai langsung di text (JS sudah memasukkan "✔" ke setiap li jika ingin) */
+  /* style agar teks centang terlihat rapi */
+  ul li:first-child{ margin-top:2px }
+
+  .meta{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    margin-top:14px;
+    justify-content:space-between;
+    position:relative;
+    z-index:2;
+  }
+
+  .progress-box{
+    background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:10px;
+    height:12px;
+    overflow:hidden;
+    width:100%;
+    margin-top:10px;
+    box-shadow: inset 0 0 12px rgba(122,0,255,0.04);
+  }
+
+  .progress{
+    height:100%;
+    width:0%;
+    background: linear-gradient(90deg, var(--neon2), var(--neon1));
+    box-shadow: 0 0 12px rgba(184,0,255,0.16);
+    transition: width 0.3s linear;
+  }
+
+  .btn{
+    display:inline-block;
+    border-radius:12px;
+    padding:10px 14px;
+    background: linear-gradient(90deg, var(--neon2), var(--neon1));
+    color:white;
+    font-weight:700;
+    text-decoration:none;
+    cursor:pointer;
+    border: none;
+    box-shadow: 0 6px 22px rgba(122,0,255,0.18), 0 0 10px rgba(184,0,255,0.06);
+    transition: transform .12s ease, opacity .12s ease;
+    font-size:15px;
+    position:relative;
+    z-index:5;
+  }
+
+  .btn:active{ transform:translateY(1px) }
+  .btn[disabled]{
+    opacity:0.45;
+    cursor:not-allowed;
+    transform:none;
+    box-shadow:none;
+  }
+
+  .note{
+    font-size:13px;
+    color:var(--muted);
+    margin-top:10px;
+    position:relative;
+    z-index:2;
+  }
+
+  footer{
+    text-align:center;
+    color:var(--muted);
+    margin-top:24px;
+    font-size:13px;
+  }
+
+  .price-old{
+    text-decoration:line-through;
+    color:rgba(255,255,255,0.35);
+    font-weight:600;
+    margin-right:8px;
+    font-size:13px;
+  }
+
+  .discount-badge{
+    background: rgba(184,0,255,0.12);
+    color:var(--neon1);
+    padding:4px 8px;
+    border-radius:8px;
+    font-weight:700;
+    font-size:13px;
+    margin-left:8px;
+  }
+
+  /* small responsive tweaks */
+  @media (max-width:420px){
+    .title h2{font-size:18px}
+    .price{font-size:14px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Promote Fred Gtps</h1>
+  <p>System Promo & Jadwal Tertutup (Selasa/Кamis)</p>
+</header>
+
+<!-- Promo banner -->
+<div class="promo-banner" id="promoBanner">
+  <div class="promo-left">
+    <div class="promo-tag" id="promoTag"></div>
+    <div>
+      <div class="promo-text" id="promoText">Promo</div>
+      <div style="font-size:12px;color:var(--muted)">Weekend: 15% • Night: 10%</div>
+    </div>
+  </div>
+  <div class="promo-right" id="promoRight">Sisa Waktu Discount</div>
+</div>
+
+<main class="container">
+  <div class="grid" id="cards"></div>
+  <footer>Kontak: <strong>Website Fred</strong> — ©Fred Gtps</footer>
+</main>
+
+<script>
+/*
+  Update summary:
+  - Weekend Promo: 15% (Saturday, Sunday)
+  - Night Discount: 10% (applies between 19:00 - 05:59 local time)
+  - Schedule lock: Tuesday (2) and Thursday (4) between 14:00 - 17:59 -> buttons locked
+  - If schedule lock active, buttons disabled regardless of cooldowns.
+  - Price parsing: parse digits from "5.000" -> 5000
+  - Display shows original price and discounted price when promo active.
+*/
+
+/* ---------- Data paket (sesuaikan) ---------- */
+const PAKET = [
+  { name: "NORMAL", price: "5.000", waText: "NORMAL", benefits: [
+      "✔ DAPAT THUMBAIL BAGUS",
+      "✔ WAJIB ADD CODE FOR GIVEAWAY",
+      "✔ MENAIKAN PLAYER SERVER",
+      "✔ LAYANAN LUMAYAN CEPAT",
+      "✔ HARGA TERJANGKAU"
+    ]
+  },
+  { name: "SKIP", price: "10.000", waText: "SKIP", benefits: [
+      "✔ DAPAT THUMBAIL BAGUS",
+      "✔ BEBAS ADD CODE FOR GIVEAWAY",
+      "✔ MENAIKAN PLAYER SERVER",
+      "✔ LAYANAN CUKUP CEPAT",
+      "✔ HARGA TERJANGKAU",
+      "✔ LEWATI NORMAL"
+    ]
+  },
+  { name: "SUPER SKIP", price: "15.000", waText: "SUPER SKIP", benefits: [
+      "✔ DAPAT THUMBAIL BAGUS",
+      "✔ BEBAS ADD CODE FOR GIVEAWAY",
+      "✔ MENAIKAN PLAYER SERVER",
+      "✔ LAYANAN CEPAT",
+      "✔ HARGA TERJANGKAU",
+      "✔ LANGSUNG LOGIN",
+      "✔ LEWATI SKIP"
+    ]
+  },
+  { name: "VIP", price: "20.000", waText: "VIP", benefits: [
+      "✔ DAPAT THUMBAIL BAGUS",
+      "✔ BEBAS ADD CODE FOR GIVEAWAY",
+      "✔ MENAIKAN PLAYER SERVER",
+      "✔ LAYANAN CEPAT",
+      "✔ LANGSUNG LOGIN",
+      "✔ BOOST",
+      "✔ HARGA CUKUP TERJANGKAU",
+      "✔ SERVER TERBATAS",
+      "✔ LEWATI SKIP"
+    ]
+  },
+  { name: "SPONSOR", price: "5.000 / 1 VID", waText: "SPONSOR", benefits: [
+      "✔ DAPAT BUYER JIKA ADA",
+      "✔ MENAIKAN JUMLAH USER GRUB",
+      "✔ COCOK UNTUK HOSTING GTPS, PROMOTE, DLL",
+      "✔ DURASI 15 DETIK"
+    ]
+  }
+];
+
+/* ---------- Utilities ---------- */
+function idSafe(text){
+  return text.replace(/\s+/g, "-").replace(/[^a-zA-Z0-9-_]/g,"").toLowerCase();
+}
+function parsePrice(str){
+  // parse "5.000" -> 5000; if format "5.000 / 1 VID" take first number
+  const m = str.match(/[\d.,]+/);
+  if(!m) return 0;
+  return parseInt(m[0].replace(/[^\d]/g,''), 10) || 0;
+}
+function formatRupiah(num){
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+/* ---------- Promo / Schedule logic ---------- */
+const WEEKEND_DISCOUNT = 15; // %
+const NIGHT_DISCOUNT = 10; // %
+const COOLDOWN_SECONDS = 50;
+const WA_NUMBER = "6282339095620"; // ganti jika perlu
+
+// Night hours: 19:00 - 05:59 (local time)
+function isNight(now){
+  const h = now.getHours();
+  return (h >= 19) || (h <= 5);
+}
+
+// Weekend: Sat(6) or Sun(0)
+function isWeekend(now){
+  const d = now.getDay();
+  return d === 0 || d === 6;
+}
+
+// Schedule lock: Tue(2) or Thu(4) between 14:00 - 17:59
+function isScheduleLocked(now){
+  const d = now.getDay();
+  const h = now.getHours();
+  if((d === 2 || d === 4) && (h >= 14 && h < 18)) return true;
+  return false;
+}
+
+// Next unlock time for schedule lock (find next time when not in locked window)
+function nextUnlockTime(now){
+  // If not locked now, return null
+  if(!isScheduleLocked(now)) return null;
+  const d = now.getDay();
+  // lock ends same day at 18:00
+  const end = new Date(now);
+  end.setHours(18,0,0,0);
+  return end;
+}
+
+/* ---------- Render cards (with price calc) ---------- */
+const cardsEl = document.getElementById("cards");
+
+// compute numeric base prices
+PAKET.forEach(p => p._baseValue = parsePrice(p.price));
+
+function computeActivePromo(now){
+  // returns {type: 'weekend'|'night'|null, percent: number}
+  if(isWeekend(now)) return { type:'weekend', percent: WEEKEND_DISCOUNT };
+  if(isNight(now)) return { type:'night', percent: NIGHT_DISCOUNT };
+  return { type:null, percent:0 };
+}
+
+function buildCards(){
+  const now = new Date();
+  const promo = computeActivePromo(now);
+  const locked = isScheduleLocked(now);
+
+  cardsEl.innerHTML = PAKET.map(p => {
+    const id = idSafe(p.name);
+    const base = p._baseValue || 0;
+    let discounted = base;
+    let discountText = "";
+    if(promo.percent > 0 && base > 0){
+      discounted = Math.round(base * (100 - promo.percent) / 100);
+      discountText = `${promo.percent}% OFF`;
+    }
+    // price displays
+    const priceHtml = base > 0 ? `
+      <div>
+        ${promo.percent > 0 ? `<span class="price-old">Rp ${formatRupiah(base)}</span>` : ''}
+        <span class="price">Rp ${formatRupiah(discounted)}</span>
+        ${promo.percent > 0 ? `<span class="discount-badge">${discountText}</span>` : ''}
+      </div>
+    ` : `<div class="price">Rp ${p.price}</div>`;
+
+    return `
+      <div class="card" id="card-${id}">
+        <div class="title"><h2>${p.name}</h2></div>
+        ${priceHtml}
+        <ul>
+          ${p.benefits.map(b => `<li>${b}</li>`).join('')}
+        </ul>
+
+        <div class="meta">
+          <div style="flex:1">
+            <div class="progress-box" aria-hidden="true">
+              <div class="progress" id="progress-${id}" style="width:0%"></div>
+            </div>
+            <div class="note" id="note-${id}">${ locked ? 'Tombol terkunci saat jadwal tutup' : 'Klik Buy untuk memesan.'}</div>
+          </div>
+
+          <div style="width:150px; text-align:right;">
+            <!-- button has data attributes for later use -->
+            <button class="btn" id="btn-${id}" data-base="${base}" data-discounted="${discounted}" onclick="handleBuy('${id}','${encodeURIComponent(p.waText)}')"
+              ${ locked ? 'disabled' : '' }>
+              ${ locked ? 'Terkunci' : 'Buy Now' }
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ---------- Cooldown trackers (per button) ---------- */
+const cooldowns = {}; // id -> remaining seconds
+let timers = {};      // id -> interval id
+
+function startCooldown(id){
+  // if already cooling, ignore
+  if(cooldowns[id] && cooldowns[id] > 0) return;
+
+  cooldowns[id] = COOLDOWN_SECONDS;
+  const btn = document.getElementById("btn-"+id);
+  const prog = document.getElementById("progress-"+id);
+  const note = document.getElementById("note-"+id);
+
+  // lock UI
+  if(btn){
+    btn.setAttribute("disabled", "true");
+    btn.style.opacity = "0.55";
+  }
+  if(prog){
+    prog.style.width = "0%";
+    prog.style.transition = "width 1s linear";
+  }
+  if(note){
+    note.textContent = `Cooldown ${COOLDOWN_SECONDS}s — tunggu hingga tombol aktif kembali.`;
+  }
+
+  // interval update
+  timers[id] = setInterval(() => {
+    cooldowns[id] = cooldowns[id] - 1;
+    const passed = COOLDOWN_SECONDS - (cooldowns[id]);
+    const percent = Math.round((passed / COOLDOWN_SECONDS) * 100);
+
+    if(prog){
+      prog.style.width = percent + "%";
+    }
+    if(btn){
+      btn.textContent = `Cooldown ${cooldowns[id]}s`;
+    }
+    if(note && cooldowns[id] > 0){
+      note.textContent = `Cooldown ${cooldowns[id]}s — tunggu hingga tombol aktif kembali.`;
+    }
+
+    // when cooldown finishes, only enable if schedule not locked
+    if(cooldowns[id] <= 0){
+      clearInterval(timers[id]);
+      timers[id] = null;
+      cooldowns[id] = 0;
+      if(prog){
+        prog.style.width = "100%";
+        setTimeout(()=>{ if(prog) prog.style.width = "0%"; }, 700);
+      }
+      if(btn){
+        // enable only if schedule is not locked currently
+        if(!isScheduleLocked(new Date())){
+          btn.removeAttribute("disabled");
+          btn.style.opacity = "1";
+          btn.textContent = "Buy Now";
+        } else {
+          btn.textContent = "Terkunci";
+        }
+      }
+      if(note){
+        note.textContent = `Klik Buy untuk memesan.`;
+      }
+    }
+  }, 1000);
+}
+
+/* ---------- Buy handler (opens WA & starts cooldown) ---------- */
+function handleBuy(id, waTextEncoded){
+  // if schedule locked, ignore
+  if(isScheduleLocked(new Date())){
+    // update UI message
+    const note = document.getElementById("note-"+id);
+    if(note) note.textContent = 'Tombol saat ini dikunci karena jadwal (Selasa/Kamis 14:00–18:00).';
+    return;
+  }
+  // if currently cooling, ignore
+  if(cooldowns[id] && cooldowns[id] > 0) {
+    return;
+  }
+
+  // get button data to include price
+  const btn = document.getElementById("btn-"+id);
+  const base = parseInt(btn?.getAttribute('data-base') || '0', 10);
+  const discounted = parseInt(btn?.getAttribute('data-discounted') || base, 10);
+
+  // open WhatsApp
+  const waText = decodeURIComponent(waTextEncoded);
+  const now = new Date();
+  const message = `Halo kak, saya ingin membeli paket: ${waText}\nHarga: Rp ${formatRupiah(discounted)}\nTanggal: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+  const waUrl = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(waUrl, "_blank");
+
+  // start cooldown for this button
+  startCooldown(id);
+}
+
+/* ---------- Promo banner & schedule countdown UI ---------- */
+const promoBanner = document.getElementById('promoBanner');
+const promoText = document.getElementById('promoText');
+const promoRight = document.getElementById('promoRight');
+const promoTag = document.getElementById('promoTag');
+
+function updateBanner(){
+  const now = new Date();
+  const promo = computeActivePromo(now);
+  const locked = isScheduleLocked(now);
+
+  // promo text
+  if(promo.type === 'weekend'){
+    promoText.textContent = `Weekend Promo aktif — Diskon ${promo.percent}% untuk semua paket!`;
+    promoTag.textContent = '';
+  } else if(promo.type === 'night'){
+    promoText.textContent = `Night Discount aktif — Diskon ${promo.percent}% untuk semua paket!`;
+    promoTag.textContent = '';
+  } else {
+    promoText.textContent = `Tidak ada promo aktif saat ini.`;
+    promoTag.textContent = 'PROMO';
+  }
+
+  // schedule lock status & local time
+  const localTime = now.toLocaleTimeString();
+  if(locked){
+    const unlock = nextUnlockTime(now);
+    const diffSec = Math.max(0, Math.ceil((unlock - now)/1000));
+    promoRight.innerHTML = `Tombol <strong>TERKUNCI</strong> — buka lagi dalam <strong id="unlockCountdown">${formatSeconds(diffSec)}</strong>`;
+  } else {
+    promoRight.innerHTML = `Waktu ${localTime}`;
+  }
+}
+
+function formatSeconds(sec){
+  const h = Math.floor(sec/3600);
+  const m = Math.floor((sec%3600)/60);
+  const s = sec%60;
+  return `${h>0?h+'h ':''}${m>0?m+'m ':''}${s}s`;
+}
+
+/* ---------- Periodic updater to refresh promos & schedule (every 1s) ---------- */
+buildCards();
+updateBanner();
+
+// keep a recurring check to refresh banner, card prices, and lock state
+setInterval(()=> {
+  // rebuild price displays only when promo changes or schedule lock changes
+  // for simplicity we rebuild cards every minute or when schedule changes
+  // but keep it lightweight: check promo and lock states
+  const prevPromoTag = promoTag.dataset._last || '';
+  const now = new Date();
+  const currentPromo = computeActivePromo(now).type;
+  const currentLocked = isScheduleLocked(now) ? 'locked' : 'open';
+
+  // update banner every second
+  updateBanner();
+
+  // if promo or lock changed, rebuild cards to update prices/button states
+  if(promoTag.dataset._last !== currentPromo || promoTag.dataset._lock !== currentLocked){
+    promoTag.dataset._last = currentPromo;
+    promoTag.dataset._lock = currentLocked;
+    buildCards();
+
+    // re-apply any active cooldowns to newly rendered elements
+    // If a cooldown is running in tracker, re-render its UI state
+    Object.keys(cooldowns).forEach(id => {
+      if(cooldowns[id] && cooldowns[id] > 0){
+        // set UI elements to show cooldown immediately
+        const btn = document.getElementById("btn-"+id);
+        const prog = document.getElementById("progress-"+id);
+        const note = document.getElementById("note-"+id);
+        if(btn){
+          btn.setAttribute("disabled","true");
+          btn.style.opacity = "0.55";
+          btn.textContent = `Cooldown ${cooldowns[id]}s`;
+        }
+        if(prog){
+          const passed = COOLDOWN_SECONDS - cooldowns[id];
+          const percent = Math.round((passed / COOLDOWN_SECONDS) * 100);
+          prog.style.width = percent + "%";
+        }
+        if(note){
+          note.textContent = `Cooldown ${cooldowns[id]}s — tunggu hingga tombol aktif kembali.`;
+        }
+      }
+    });
+  }
+}, 1000);
+
+/* ---------- End of script ---------- */
+
+</script>
+
+</body>
+  </html>
